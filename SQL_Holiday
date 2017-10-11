@@ -1,0 +1,44 @@
+;WITH x AS 
+(
+  SELECT calender_id, calender_Date, calender_IsHoliday, calender_HolidayText, calender_FirstDayOfYear,
+    calender_DOWInMonth, calender_MonthName, calender_WeekDayName, calender_Day,
+    calender_LastDOWInMonth = ROW_NUMBER() OVER 
+    (
+      PARTITION BY calender_FirstDayOfMonth, calender_Weekday 
+      ORDER BY calender_Date DESC
+    )
+  FROM calendarize_db
+)
+UPDATE x SET calender_IsHoliday = 1, calender_HolidayText = CASE
+  WHEN (calender_Date = calender_FirstDayOfYear) 
+    THEN 'New Year''s Day'
+  WHEN (calender_DOWInMonth = 3 AND calender_MonthName = 'January' AND calender_WeekDayName = 'Monday')
+    THEN 'Martin Luther King Day'    -- (3rd Monday in January)
+  WHEN (calender_DOWInMonth = 3 AND calender_MonthName = 'February' AND calender_WeekDayName = 'Monday')
+    THEN 'President''s Day'          -- (3rd Monday in February)
+  WHEN (calender_LastDOWInMonth = 1 AND calender_MonthName = 'May' AND calender_WeekDayName = 'Monday')
+    THEN 'Memorial Day'              -- (last Monday in May)
+  WHEN (calender_MonthName = 'July' AND calender_Day = 4)
+    THEN 'Independence Day'          -- (July 4th)
+  WHEN (calender_DOWInMonth = 1 AND calender_MonthName = 'September' AND calender_WeekDayName = 'Monday')
+    THEN 'Labour Day'                -- (first Monday in September)
+  WHEN (calender_DOWInMonth = 2 AND calender_MonthName = 'October' AND calender_WeekDayName = 'Monday')
+    THEN 'Columbus Day'              -- Columbus Day (second Monday in October)
+  WHEN (calender_MonthName = 'November' AND calender_Day = 11)
+    THEN 'Veterans'' Day'            -- Veterans' Day (November 11th)
+  WHEN (calender_DOWInMonth = 4 AND calender_MonthName = 'November' AND calender_WeekDayName = 'Thursday')
+    THEN 'Thanksgiving Day'          -- Thanksgiving Day (fourth Thursday in November)
+  WHEN (calender_MonthName = 'December' AND calender_Day = 25)
+    THEN 'Christmas Day'
+  END
+WHERE 
+  (calender_Date = calender_FirstDayOfYear)
+  OR (calender_DOWInMonth = 3     AND calender_MonthName = 'January'   AND calender_WeekDayName = 'Monday')
+  OR (calender_DOWInMonth = 3     AND calender_MonthName = 'February'  AND calender_WeekDayName = 'Monday')
+  OR (calender_LastDOWInMonth = 1 AND calender_MonthName = 'May'       AND calender_WeekDayName = 'Monday')
+  OR (calender_MonthName = 'July' AND calender_Day = 4)
+  OR (calender_DOWInMonth = 1     AND calender_MonthName = 'September' AND calender_WeekDayName = 'Monday')
+  OR (calender_DOWInMonth = 2     AND calender_MonthName = 'October'   AND calender_WeekDayName = 'Monday')
+  OR (calender_MonthName = 'November' AND calender_Day = 11)
+  OR (calender_DOWInMonth = 4     AND calender_MonthName = 'November' AND calender_WeekDayName = 'Thursday')
+  OR (calender_MonthName = 'December' AND calender_Day = 25);
