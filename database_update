@@ -18,8 +18,8 @@ calendarize_db
 │   └── user_config_extra            [VARCHAR(45)]       NOT NULL,
 ├── calendars 
 │  ├── calender_id                   [INT(11)]           NOT NULL PRIMARY KEY,
-|  ├── clander_date                  [DATE]              NOT NULL,
-|  ├── calender_day                  [TINYINT(1)]        NOT NULL,
+|  ├── clander_Date                  [DATE]              NOT NULL,
+|  ├── calender_Day                  [TINYINT(1)]        NOT NULL,
 |  ├── calender_DaySuffix            [CHAR(2)]           NOT NULL,
 |  ├── calender_Weekday              [TINYINT(1)]        NOT NULL,
 |  ├── calender_WeekDayName          [VARCHAR(45)]       NOT NULL,
