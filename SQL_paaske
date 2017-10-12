@@ -1,0 +1,21 @@
+CREATE FUNCTION dbo.GetEasterHolidays(@year INT) 
+RETURNS TABLE
+WITH SCHEMABINDING
+AS 
+RETURN 
+(
+  WITH x AS 
+  (
+    SELECT calender_Date = CONVERT(DATE, RTRIM(@year) + '0' + RTRIM(calender_Month) 
+        + RIGHT('0' + RTRIM(calender_Day),2))
+      FROM (SELECT calender_Month, calender_Day = DaysToSunday + 28 - (31 * (calender_Month / 4))
+      FROM (SELECT calender_Month = 3 + (DaysToSunday + 40) / 44, DaysToSunday
+      FROM (SELECT DaysToSunday = paschal - ((@year + @year / 4 + paschal - 13) % 7)
+      FROM (SELECT paschal = epact - (epact / 28)
+      FROM (SELECT epact = (24 + 19 * (@year % 19)) % 30) 
+        AS epact) AS paschal) AS dts) AS m) AS d
+  )
+  SELECT calender_Date, HolidayName = 'Easter Sunday' FROM x
+    UNION ALL SELECT DATEADD(DAY,-2,calender_Date), 'Good Friday'   FROM x
+    UNION ALL SELECT DATEADD(DAY, 1,calender_Date), 'Easter Monday' FROM x
+);
