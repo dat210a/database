@@ -1,8 +1,3 @@
-# database
-database user/calender/event
-
-
---------------------------------------------------------------------------
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -12,6 +7,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 -- -----------------------------------------------------
 -- Schema sys
 -- -----------------------------------------------------
@@ -20,44 +20,89 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema sys
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `sys` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`table2`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`table2` (
+)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`table3`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`table3` (
+)
+ENGINE = InnoDB;
+
 USE `sys` ;
 
 -- -----------------------------------------------------
--- Table `sys`.`calender`
+-- Table `sys`.`calendars`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sys`.`calender` (
-  `calenderID` INT(11) NOT NULL,
-  `calenderName` VARCHAR(45) NOT NULL,
-  `calenderDateCreated` DATE NOT NULL,
-  `calenderDetails` VARCHAR(45) NOT NULL,
-  `calenderOwner` VARCHAR(45) NOT NULL,
-  `calenderMembers` VARCHAR(45) NULL DEFAULT NULL,
-  `calenderTime` INT(11) NULL DEFAULT NULL,
-  `calenderDay` INT(11) NULL DEFAULT NULL,
-  `calenderMonth` INT(11) NULL DEFAULT NULL,
-  `calenderYear` INT(11) NULL DEFAULT NULL,
-  `calenderExtra` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`calenderID`))
+CREATE TABLE IF NOT EXISTS `sys`.`calendars` (
+  `calender_id` INT(11) NOT NULL,
+  `calender_Date` DATE NOT NULL,
+  `calender_Day` TINYINT(1) NOT NULL,
+  `calender_DaySuffix` CHAR(2) NOT NULL,
+  `calender_Weekday` TINYINT(1) NOT NULL,
+  `calender_WeekDayName` VARCHAR(45) NOT NULL,
+  `calender_IsHoliday` BIT(1) NOT NULL,
+  `calender_IsWeekend` BIT(1) NOT NULL,
+  `calender_HolidayText` VARCHAR(45) NULL DEFAULT NULL,
+  `calender_DOWInMonth` TINYINT(1) NOT NULL,
+  `calender_DayOfYear` TINYINT(1) NOT NULL,
+  `calender_WeekOfMonth` TINYINT(1) NOT NULL,
+  `calender_WeekOfYear` TINYINT(1) NOT NULL,
+  `calender_ISOWeekOfYear` TINYINT(1) NOT NULL,
+  `calender_Month` TINYINT(1) NOT NULL,
+  `calender_MonthName` VARCHAR(45) NOT NULL,
+  `calender_Quater` TINYINT(1) NOT NULL,
+  `calender_QauterName` VARCHAR(45) NOT NULL,
+  `calender_Year` INT(11) NOT NULL,
+  `calender_MMYYYY` CHAR(6) NOT NULL,
+  `calender_MonthYear` CHAR(6) NOT NULL,
+  `calender_FirstDayOfMonth` DATE NOT NULL,
+  `calender_LastDayOfMonth` DATE NOT NULL,
+  `calender_FirstDayOfQuater` DATE NOT NULL,
+  `calender_LastDayOfQuater` DATE NOT NULL,
+  `calender_FirstDayOfYear` DATE NOT NULL,
+  `calender_LastDayOfYear` DATE NOT NULL,
+  `calender_FirstDayOfNextMonth` DATE NOT NULL,
+  `calender_FirstDayOfNextYear` DATE NOT NULL,
+  `calender_deleted` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`calender_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `sys`.`event`
+-- Table `sys`.`events`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sys`.`event` (
-  `EventID` INT(11) NOT NULL,
-  `EventName` VARCHAR(45) NOT NULL,
-  `EventDateCreated` DATE NOT NULL,
-  `EventDetails` VARCHAR(45) NOT NULL,
-  `EventLocation` VARCHAR(45) NULL DEFAULT NULL,
-  `EventStart` DATE NULL DEFAULT NULL,
-  `EventEnd` DATE NULL DEFAULT NULL,
-  `EventTime` VARCHAR(45) NULL DEFAULT NULL,
-  `EventMembers` VARCHAR(45) NOT NULL,
-  `EventIsUnderThisCalender` VARCHAR(45) NOT NULL,
-  `EventExtra` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`EventID`))
+CREATE TABLE IF NOT EXISTS `sys`.`events` (
+  `event_id` INT(11) NOT NULL,
+  `event_Name` VARCHAR(45) NOT NULL,
+  `event_date_created` DATE NOT NULL,
+  `event_details` VARCHAR(45) NOT NULL,
+  `event_location` VARCHAR(45) NOT NULL,
+  `event_start` DATE NOT NULL,
+  `event_end` DATE NOT NULL,
+  `event_time` VARCHAR(45) NOT NULL,
+  `event_members` VARCHAR(45) NOT NULL,
+  `event_belongs_to` VARCHAR(45) NOT NULL,
+  `event_extra` VARCHAR(45) NOT NULL,
+  `event_deleted` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`event_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -76,26 +121,22 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `sys`.`user`
+-- Table `sys`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sys`.`user` (
-  `UserID` INT(11) NOT NULL,
-  `UserType` INT(11) NOT NULL,
-  `UsernName` VARCHAR(45) NOT NULL,
-  `UserAge` VARCHAR(45) NOT NULL,
-  `UserEmail` VARCHAR(45) NOT NULL,
-  `UserPhone` INT(11) NULL DEFAULT NULL,
-  `UserNationality` VARCHAR(45) NULL DEFAULT NULL,
-  `UserAdress` VARCHAR(45) NULL DEFAULT NULL,
-  `UserRole` VARCHAR(45) NOT NULL,
-  `UserRecord` VARCHAR(45) NULL DEFAULT NULL,
-  `UserPassword` VARCHAR(45) NOT NULL,
-  `UserFriendList` VARCHAR(45) NULL DEFAULT NULL,
-  `UserCalenders` VARCHAR(45) NULL DEFAULT NULL,
-  `UserSubscribedToThisCalender` VARCHAR(45) NULL DEFAULT NULL,
-  `UserEvents` VARCHAR(45) NULL DEFAULT NULL,
-  `UserExtra` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`UserID`))
+CREATE TABLE IF NOT EXISTS `sys`.`users` (
+  `user_id` INT(11) NOT NULL,
+  `user_type` INT(11) NOT NULL,
+  `user_name` VARCHAR(45) NOT NULL,
+  `user_email` VARCHAR(45) NOT NULL,
+  `user_phone` INT(11) NOT NULL,
+  `user_role` VARCHAR(45) NOT NULL,
+  `user_password` VARCHAR(45) NOT NULL,
+  `user_friends` VARCHAR(45) NOT NULL,
+  `user_calenders` VARCHAR(45) NOT NULL,
+  `user_events` VARCHAR(45) NOT NULL,
+  `user_extra` VARCHAR(45) NOT NULL,
+  `user_deleted` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`user_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -104,10 +145,63 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `sys`.`userconfig`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sys`.`userconfig` (
-  `UserConfiqID` INT(11) NOT NULL,
-  `UserConfigPassword` VARCHAR(45) NULL DEFAULT NULL,
-  `UserConfigExtra` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`UserConfiqID`))
+  `user_config_id` INT(11) NOT NULL,
+  `user_config_password` VARCHAR(45) NOT NULL,
+  `user_config_extra` VARCHAR(45) NOT NULL,
+  `users_user_id` INT(11) NOT NULL,
+  PRIMARY KEY (`user_config_id`, `users_user_id`),
+  INDEX `fk_userconfig_users1_idx` (`users_user_id` ASC),
+  CONSTRAINT `fk_userconfig_users1`
+    FOREIGN KEY (`users_user_id`)
+    REFERENCES `sys`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sys`.`users_has_calendars`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sys`.`users_has_calendars` (
+  `users_user_id` INT(11) NOT NULL,
+  `calendars_calender_id` INT(11) NOT NULL,
+  PRIMARY KEY (`users_user_id`, `calendars_calender_id`),
+  INDEX `fk_users_has_calendars_calendars1_idx` (`calendars_calender_id` ASC),
+  INDEX `fk_users_has_calendars_users_idx` (`users_user_id` ASC),
+  CONSTRAINT `fk_users_has_calendars_users`
+    FOREIGN KEY (`users_user_id`)
+    REFERENCES `sys`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_has_calendars_calendars1`
+    FOREIGN KEY (`calendars_calender_id`)
+    REFERENCES `sys`.`calendars` (`calender_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sys`.`calendars_has_events`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sys`.`calendars_has_events` (
+  `calendars_calender_id` INT(11) NOT NULL,
+  `events_event_id` INT(11) NOT NULL,
+  PRIMARY KEY (`calendars_calender_id`, `events_event_id`),
+  INDEX `fk_calendars_has_events_events1_idx` (`events_event_id` ASC),
+  INDEX `fk_calendars_has_events_calendars1_idx` (`calendars_calender_id` ASC),
+  CONSTRAINT `fk_calendars_has_events_calendars1`
+    FOREIGN KEY (`calendars_calender_id`)
+    REFERENCES `sys`.`calendars` (`calender_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_calendars_has_events_events1`
+    FOREIGN KEY (`events_event_id`)
+    REFERENCES `sys`.`events` (`event_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
