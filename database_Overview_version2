@@ -46,7 +46,12 @@ calendarize_db
 |  ├── calender_LastDayOfYear        [DATE]              NOT NULL,
 |  ├── calender_FirstDayOfNextMonth  [DATE]              NOT NULL,
 |  ├── calender_FirstDayOfNextYear   [DATE]              NOT NULL,
-|  └── calender_deleted              [VARCHAR(45)]       NOT NULL,
+|  ├── calender_Deleted              [VARCHAR(45)]       NOT NULL,
+|  ├── calender_Owner                [VARCHAR(45)]       NOT NULL,
+|  ├── calender_Members              [VARCHAR(45)]       NOT NULL,
+|  ├── calender_Events               [VARCHAR(45)]       NOT NULL,
+|  ├── calender_Admins               [VARCHAR(45)]       NOT NULL,
+|  └── calender_Details              [VARCHAR(45)]       NOT NULL,
 └── events
     ├── event_id                     [INT(11)]           NOT NULL PRIMARY KEY,
     ├── event_name                   [VARCHAR(45)]       NOT NULL,
