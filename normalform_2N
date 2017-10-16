@@ -1,14 +1,83 @@
-2.Normalform for "user" ---
+2.Normalform
 
 
 Table[1]
-user_id     user_name	    user_email	  user_phone	  user_type (id)
+user_id
+user_name	    
+user_email	  
+user_phone	  
+user_type (id?)
+
 
 Table[2]
-user_type (id)  	user_role 	  user_calender	    user_events 	  user_password 	  user_friends     user_extra	    user_deleted
-0		            	admin
-1			            user
-2			            organizer
-3			            leader
-4                 guest
+user_type (id?)  	          0          1        2           3         4
+user_role 	                admin      user     organizer   leader    guest
+user_calender(id?)	    
+user_events(id?) 	  
+user_password 	  
+user_friends     
+user_extra	    
+user_deleted
+
+
+Table[3]
+user_id     
+user_confiq_id    
+user_password   
+user_config_password  
+user_config_password
+
+
+Table[4]
+user_calender(id?)      
+calender_id              
+clander_Date              
+calender_Day                
+calender_DaySuffix           
+calender_Weekday              
+calender_WeekDayName        
+calender_IsWeekend            
+calender_IsHoliday            
+calender_HolidayText          
+calender_DOWInMonth           
+calender_DayOfYear          
+calender_WeekOfMonth       
+calender_WeekOfYear           
+calender_ISOWeekOfYear       
+calender_Month              
+calender_MonthName            
+calender_Quarter             
+calender_QuarterName         
+calender_Year               
+calender_MMYYYY               
+calender_MonthYear            
+calender_FirstDayOfMonth    
+calender_LastDayOfMonth       
+calender_FirstDayOfQuarter    
+calender_LastDayOfQuarter    
+calender_FirstDayOfYear       
+calender_LastDayOfYear        
+calender_FirstDayOfNextMonth 
+calender_FirstDayOfNextYear  
+calender_deleted      
+
+
+Tbale[5]
+
+
+Table[6]
+user_event(id?)
+even_id
+event_name                  
+event_date_created          
+event_details                
+event_location             
+event_start                
+event_end                  
+event_time                  
+event_members                
+event_belongs_to             
+event_extra                 
+event_deleted                
+
 
