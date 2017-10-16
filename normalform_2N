@@ -29,9 +29,8 @@ user_config_password
 
 
 Table[4]
-user_calender(id?)      
-calender_id              
-clander_Date              
+user_calender(id?)
+calender_id                         
 calender_Day                
 calender_DaySuffix           
 calender_Weekday              
@@ -62,11 +61,19 @@ calender_FirstDayOfNextYear
 calender_deleted      
 
 
-Tbale[5]
+
+Table[5]
+calender_id
+calender_name(id?)
+calender_owner
+calender_members
+calender_events
+calender_admins
+calender_details
 
 
 Table[6]
-user_event(id?)
+user_events(id?)
 even_id
 event_name                  
 event_date_created          
@@ -78,6 +85,7 @@ event_time
 event_members                
 event_belongs_to             
 event_extra                 
-event_deleted                
+event_deleted
+
 
 
